@@ -1,0 +1,72 @@
+/* exercicio: */
+
+CREATE TABLE Usuario (
+    ID_Usuario Number(3) PRIMARY KEY,
+    Nome Char(15),
+    Email Char(60),
+    Data_De_Nascimento Date,
+    Senha Char(8)
+);
+
+CREATE TABLE Jogo (
+    ID_Jogo Number(5) PRIMARY KEY,
+    Nome Char(12),
+    Categoria Char(20),
+    Data_De_Lancamento Date,
+    Objetivo Char(20)
+);
+
+CREATE TABLE Partida (
+    ID_Partida Number(20) PRIMARY KEY,
+    ID_Jogo Number(9),
+    Tempo TIME,
+    Objetivo Char(15),
+    ID_Time1 Number(9),
+    ID_Time2 Number(9)
+);
+
+CREATE TABLE Time (
+    ID_Numero_Time Number(9) PRIMARY KEY,
+    ID_Personagem1 Number(9),
+    ID_Personagem2 Number(9),
+    ID_Personagem3 Number(9),
+    ID_Personagem4 Number(9),
+    ID_Personagem5 Number(9)
+);
+
+CREATE TABLE Personagem (
+    ID_Personagem Number(8) PRIMARY KEY,
+    ID_Partida Number(20),
+    Dinheiro Char(999),
+    Vida Number(3),
+    Vida_colete Number(3),
+    Armas Char(12)
+);
+
+CREATE TABLE Ranking (
+    ID_Ranking Number(3) PRIMARY KEY,
+    ID_Partida Number(20),
+    ID_Time Number(9),
+    Classificacao Char(99),
+    Pontos_Objetivo Char(29)
+);
+ 
+ALTER TABLE Partida ADD CONSTRAINT FK_Partida_2
+    FOREIGN KEY (ID_Time1, ID_Time2)
+    REFERENCES Time (ID_Numero_Time, ID_Numero_Time);
+ 
+ALTER TABLE Time ADD CONSTRAINT FK_Time_2
+    FOREIGN KEY (ID_Personagem2???, ID_Personagem3???, ID_Personagem4???, ID_Personagem5???, ID_Personagem1???)
+    REFERENCES Personagem (???, ???, ???, ???, ???);
+ 
+ALTER TABLE Personagem ADD CONSTRAINT FK_Personagem_2
+    FOREIGN KEY (ID_Partida)
+    REFERENCES Partida (ID_Partida);
+ 
+ALTER TABLE Ranking ADD CONSTRAINT FK_Ranking_2
+    FOREIGN KEY (ID_Partida)
+    REFERENCES Partida (ID_Partida);
+ 
+ALTER TABLE Ranking ADD CONSTRAINT FK_Ranking_3
+    FOREIGN KEY (ID_Time)
+    REFERENCES Time (ID_Numero_Time);

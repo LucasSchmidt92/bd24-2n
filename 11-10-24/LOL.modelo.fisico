@@ -1,0 +1,114 @@
+/* LOL: */
+
+CREATE TABLE Player (
+    Level Number(999),
+    User_Name Char(11),
+    ID_Player Numer (11) PRIMARY KEY,
+    Score Number(999),
+    fk_Team_ID_Team Number(8)
+);
+
+CREATE TABLE Team (
+    ID_Team Number(8) PRIMARY KEY,
+    Name_Team Char(8),
+    fk_Match_ID_Match Number(99)
+);
+
+CREATE TABLE Player_Match_Game (
+    Team_Points Number(999),
+    Player_Points Number(999),
+    fk_Player_ID_Player Numer (11),
+    fk_Match_ID_Match Number(99)
+);
+
+CREATE TABLE Match (
+    Duration Number(3),
+    Results Char(5),
+    Date_time Date,
+    ID_Match Number(99) PRIMARY KEY,
+    fk_Champion_ID_Champion Number(8)
+);
+
+CREATE TABLE Champion (
+    ID_Champion Number(8) PRIMARY KEY,
+    Ability Char(12),
+    Name_Champion Char(8),
+    Damage_Type Char(10),
+    Function Char(12,
+    fk_Player_ID_Player Numer (11)
+);
+
+CREATE TABLE Item (
+    ID_Team Number(3) PRIMARY KEY,
+    Name Char(12),
+    Description Char(12),
+    Effect Char(999),
+    Cost Number(3),
+    fk_Match_ID_Match Number(99)
+);
+
+CREATE TABLE Offensive_Item (
+    Phisic_Damage Numer (11),
+    Magic_Damage Numer (11),
+    fk_Item_ID_Team Number(3) PRIMARY KEY
+);
+
+CREATE TABLE Consumable (
+    Damage Number(8),
+    HP_Points Number(8),
+    fk_Item_ID_Team Number(3) PRIMARY KEY
+);
+
+CREATE TABLE Defensive_Item (
+    Res_Magic Number(8),
+    Armor Number(8),
+    fk_Item_ID_Team Number(3) PRIMARY KEY
+);
+ 
+ALTER TABLE Player ADD CONSTRAINT FK_Player_2
+    FOREIGN KEY (fk_Team_ID_Team)
+    REFERENCES Team (ID_Team)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Team ADD CONSTRAINT FK_Team_2
+    FOREIGN KEY (fk_Match_ID_Match)
+    REFERENCES Match (ID_Match)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Player_Match_Game ADD CONSTRAINT FK_Player_Match_Game_1
+    FOREIGN KEY (fk_Player_ID_Player)
+    REFERENCES Player (ID_Player);
+ 
+ALTER TABLE Player_Match_Game ADD CONSTRAINT FK_Player_Match_Game_2
+    FOREIGN KEY (fk_Match_ID_Match)
+    REFERENCES Match (ID_Match);
+ 
+ALTER TABLE Match ADD CONSTRAINT FK_Match_2
+    FOREIGN KEY (fk_Champion_ID_Champion)
+    REFERENCES Champion (ID_Champion)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Champion ADD CONSTRAINT FK_Champion_2
+    FOREIGN KEY (fk_Player_ID_Player)
+    REFERENCES Player (ID_Player)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Item ADD CONSTRAINT FK_Item_2
+    FOREIGN KEY (fk_Match_ID_Match)
+    REFERENCES Match (ID_Match)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Offensive_Item ADD CONSTRAINT FK_Offensive_Item_2
+    FOREIGN KEY (fk_Item_ID_Team)
+    REFERENCES Item (ID_Team)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE Consumable ADD CONSTRAINT FK_Consumable_2
+    FOREIGN KEY (fk_Item_ID_Team)
+    REFERENCES Item (ID_Team)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE Defensive_Item ADD CONSTRAINT FK_Defensive_Item_2
+    FOREIGN KEY (fk_Item_ID_Team)
+    REFERENCES Item (ID_Team)
+    ON DELETE CASCADE;
