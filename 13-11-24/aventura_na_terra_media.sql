@@ -50,17 +50,32 @@ INSERT INTO coletados (id_personagem, id_item, id_cenario) VALUES
 (1, 3, 3),
 (2, 1, 1);
 
-select * from personagens;
-select * from cenarios;
-select * from coletados;
-select * from itens;
+SELECT * FROM coletados (id_personagem,id_item, id_cenario)
+SELECT * FROM personagens (id_personagem,nome)
+SELECT * FROM itens (id_item,nome_item,valor)
+SELECT * FROM cenarios (id_cenario,nome_cenario)
 
-select distinct nome, nome_item 
-from personagens, itens, coletados
-where coletados.id_personagem = personagens.id_personagem and coletados.id_item = itens.id_item
-and personagens.nome = 'Aragorn'
+/*Encontrar os itens coletados por Aragorn*/
+SELECT DISTINCT nome_item
+FROM itens,coletados
+WHERE coletados.id_personagem = 1 AND itens.id_item = coletados.id_item
 
+/*Desobrir os cenários que Legolas visitou*/
+SELECT nome_cenario
+FROM cenarios,coletados
+WHERE cenarios.id_cenario = coletados.id_cenario AND id_personagem = 2
 
-select nome_cenario
-from cenarios,coletados
-where cenarios.id_cenario = coletados.id_cenario and coletados.id_personagem = 2;
+/*Verificar os itens coletados por Gimli no Campo de Batalha de Helm*/
+SELECT DISTINCT nome_item, nome_cenario
+FROM itens,cenarios,coletados
+WHERE itens.id_item = coletados.id_item 
+AND cenarios.id_cenario = coletados.id_cenario AND id_personagem = 3
+
+/*somar os valores dos itens coletados no cenario "floresta de Lothlorien"
+*/
+
+select sum (valor)
+from itens, cenarios, coletados
+where coletados.id_cenario = 1
+and itens.id_item = coletados.id_item
+and coletados.id_cenario = cenarios.id_cenario
